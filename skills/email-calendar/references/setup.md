@@ -34,7 +34,10 @@
 ## 4. Set Up Profiles
 
 ```bash
-# Install dependencies
+# Install dependencies (Debian/Ubuntu)
+sudo apt install python3-google-auth-oauthlib python3-google-api-python-client
+
+# Or with pip (if not externally managed)
 pip install google-auth-oauthlib google-api-python-client
 
 # Set up first profile (default)
