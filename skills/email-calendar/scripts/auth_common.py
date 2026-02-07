@@ -93,24 +93,22 @@ def get_credentials(profile: str = 'default', scopes: list = None) -> Credential
             
             flow = InstalledAppFlow.from_client_secrets_file(str(creds_file), scopes)
             
+            # Check for auth port override (for SSH tunneling)
+            auth_port = int(os.environ.get('OAUTH_PORT', 0))
+            
             if is_headless():
-                # Manual OOB-style auth for headless servers
-                flow.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
-                auth_url, _ = flow.authorization_url(prompt='consent')
-                
+                # Loopback flow without auto-opening browser
+                port = auth_port or 8085
                 print("\n" + "="*60)
                 print("HEADLESS AUTH")
                 print("="*60)
-                print(f"\n1. Open this URL in any browser:\n")
-                print(f"   {auth_url}\n")
-                print("2. Sign in and authorize access")
-                print("3. Copy the authorization code and paste it below\n")
-                
-                code = input("Enter authorization code: ").strip()
-                flow.fetch_token(code=code)
-                creds = flow.credentials
+                print(f"\nStarting auth server on port {port}...")
+                print("\nIf remote, set up SSH tunnel first:")
+                print(f"  ssh -L {port}:127.0.0.1:{port} <server>")
+                print("\nThen open the URL below in your browser.\n")
+                creds = flow.run_local_server(port=port, open_browser=False)
             else:
-                creds = flow.run_local_server(port=0)
+                creds = flow.run_local_server(port=auth_port or 0)
         
         token_file.write_text(creds.to_json())
     
