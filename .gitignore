@@ -1,0 +1,23 @@
+# Credentials - NEVER commit
+credentials.json
+token.json
+*.pickle
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
