@@ -21,14 +21,14 @@ pip install google-auth-oauthlib google-api-python-client
 ### 2. Set up a profile
 ```bash
 # Set up default profile (opens browser for OAuth)
-python scripts/profile_setup.py --credentials /path/to/credentials.json
+python3 scripts/profile_setup.py --credentials /path/to/credentials.json
 
 # Set up additional profiles
-python scripts/profile_setup.py --profile work --credentials /path/to/work-credentials.json
-python scripts/profile_setup.py --profile personal --credentials /path/to/personal-credentials.json
+python3 scripts/profile_setup.py --profile work --credentials /path/to/work-credentials.json
+python3 scripts/profile_setup.py --profile personal --credentials /path/to/personal-credentials.json
 
 # List profiles
-python scripts/profile_setup.py --list
+python3 scripts/profile_setup.py --list
 ```
 
 See `references/setup.md` for Google Cloud Console setup.
@@ -39,37 +39,37 @@ All scripts support `--profile` (`-p`) to switch accounts:
 
 ```bash
 # Default profile
-python scripts/gmail_check.py
+python3 scripts/gmail_check.py
 
 # Specific profile  
-python scripts/gmail_check.py -p work
-python scripts/gcal_list.py -p personal
+python3 scripts/gmail_check.py -p work
+python3 scripts/gcal_list.py -p personal
 ```
 
 ## Email (Gmail)
 
 ### Check Inbox
 ```bash
-python scripts/gmail_check.py --count 10 --unread-only
-python scripts/gmail_check.py -p work --json
+python3 scripts/gmail_check.py --count 10 --unread-only
+python3 scripts/gmail_check.py -p work --json
 ```
 
 ### Read Email
 ```bash
-python scripts/gmail_read.py --id <message_id>
+python3 scripts/gmail_read.py --id <message_id>
 ```
 
 ### Send Email
 ```bash
-python scripts/gmail_send.py --to "user@example.com" --subject "Hi" --body "Message"
-python scripts/gmail_send.py -p work --to "team@company.com" --subject "Update" --body "..." --cc "boss@company.com"
+python3 scripts/gmail_send.py --to "user@example.com" --subject "Hi" --body "Message"
+python3 scripts/gmail_send.py -p work --to "team@company.com" --subject "Update" --body "..." --cc "boss@company.com"
 ```
 
 Options: `--cc`, `--bcc`, `--html`, `--attach <file>`, `--reply-to <msg_id>`
 
 ### Search
 ```bash
-python scripts/gmail_search.py --query "from:someone@example.com is:unread"
+python3 scripts/gmail_search.py --query "from:someone@example.com is:unread"
 ```
 
 Search operators: `from:`, `to:`, `subject:`, `after:2024/01/01`, `before:`, `has:attachment`, `is:unread`, `is:starred`
@@ -78,14 +78,14 @@ Search operators: `from:`, `to:`, `subject:`, `after:2024/01/01`, `before:`, `ha
 
 ### List Events
 ```bash
-python scripts/gcal_list.py --days 7
-python scripts/gcal_list.py -p work --days 1 --json
+python3 scripts/gcal_list.py --days 7
+python3 scripts/gcal_list.py -p work --days 1 --json
 ```
 
 ### Create Event
 ```bash
-python scripts/gcal_create.py --title "Meeting" --start "2024-02-15 14:00"
-python scripts/gcal_create.py -p work --title "1:1" --start "2024-02-15 14:00" --end "2024-02-15 14:30" --attendees "bob@company.com"
+python3 scripts/gcal_create.py --title "Meeting" --start "2024-02-15 14:00"
+python3 scripts/gcal_create.py -p work --title "1:1" --start "2024-02-15 14:00" --end "2024-02-15 14:30" --attendees "bob@company.com"
 ```
 
 Options: `--end`, `--location`, `--description`, `--attendees`, `--calendar`, `--timezone`
@@ -94,14 +94,14 @@ Options: `--end`, `--location`, `--description`, `--attendees`, `--calendar`, `-
 
 **Morning briefing across accounts:**
 ```bash
-echo "=== Work ===" && python scripts/gmail_check.py -p work --unread-only
-echo "=== Personal ===" && python scripts/gmail_check.py -p personal --unread-only
+echo "=== Work ===" && python3 scripts/gmail_check.py -p work --unread-only
+echo "=== Personal ===" && python3 scripts/gmail_check.py -p personal --unread-only
 ```
 
 **Check all calendars:**
 ```bash
-python scripts/gcal_list.py -p work --days 1
-python scripts/gcal_list.py -p personal --days 1
+python3 scripts/gcal_list.py -p work --days 1
+python3 scripts/gcal_list.py -p personal --days 1
 ```
 
 ## Config Location

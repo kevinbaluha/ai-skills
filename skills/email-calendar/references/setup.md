@@ -41,11 +41,11 @@ sudo apt install python3-google-auth-oauthlib python3-google-api-python-client
 pip install google-auth-oauthlib google-api-python-client
 
 # Set up first profile (default)
-python scripts/profile_setup.py --credentials ~/Downloads/credentials.json
+python3 scripts/profile_setup.py --credentials ~/Downloads/credentials.json
 
 # Set up additional profiles
-python scripts/profile_setup.py --profile work --credentials ~/Downloads/credentials.json
-python scripts/profile_setup.py --profile personal --credentials ~/Downloads/credentials.json
+python3 scripts/profile_setup.py --profile work --credentials ~/Downloads/credentials.json
+python3 scripts/profile_setup.py --profile personal --credentials ~/Downloads/credentials.json
 
 # Each profile auth opens browser — sign in with different Google accounts
 ```
@@ -79,14 +79,14 @@ python scripts/profile_setup.py --profile personal --credentials ~/Downloads/cre
 ```bash
 # Delete tokens for a profile and re-authenticate
 rm ~/.config/openclaw-email/profiles/<profile>/token_*.json
-python scripts/gmail_check.py -p <profile>  # triggers re-auth
+python3 scripts/gmail_check.py -p <profile>  # triggers re-auth
 ```
 
 ### "Credentials not found"
 ```bash
 # Check profile setup
-python scripts/profile_setup.py --list
-python scripts/profile_setup.py --config-dir
+python3 scripts/profile_setup.py --list
+python3 scripts/profile_setup.py --config-dir
 ```
 
 ### Rate limits
