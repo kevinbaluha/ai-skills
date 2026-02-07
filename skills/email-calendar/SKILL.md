@@ -11,6 +11,10 @@ Manage Gmail and Google Calendar via Google APIs. Supports multiple accounts.
 
 ### 1. Install dependencies
 ```bash
+# Debian/Ubuntu (apt-managed Python)
+sudo apt install python3-google-auth-oauthlib python3-google-api-python-client
+
+# Or with pip (if not externally managed)
 pip install google-auth-oauthlib google-api-python-client
 ```
 
