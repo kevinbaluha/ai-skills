@@ -2,6 +2,7 @@
 """Shared authentication module for multi-account support."""
 
 import json
+import os
 import sys
 from pathlib import Path
 
@@ -11,8 +12,13 @@ try:
     from google_auth_oauthlib.flow import InstalledAppFlow
 except ImportError:
     print("ERROR: Google API libraries not installed.")
-    print("Run: pip install google-auth-oauthlib google-api-python-client")
+    print("Run: sudo apt install python3-google-auth-oauthlib python3-google-api-python-client")
     sys.exit(1)
+
+
+def is_headless():
+    """Check if running in headless environment (no display)."""
+    return not os.environ.get('DISPLAY') and not os.environ.get('WAYLAND_DISPLAY')
 
 # Base config directory
 CONFIG_DIR = Path.home() / '.config' / 'openclaw-email'
@@ -86,7 +92,15 @@ def get_credentials(profile: str = 'default', scopes: list = None) -> Credential
                 sys.exit(1)
             
             flow = InstalledAppFlow.from_client_secrets_file(str(creds_file), scopes)
-            creds = flow.run_local_server(port=0)
+            
+            if is_headless():
+                # Console auth for headless servers
+                print("\n" + "="*60)
+                print("HEADLESS AUTH: Visit the URL below, authorize, then paste the code.")
+                print("="*60 + "\n")
+                creds = flow.run_console()
+            else:
+                creds = flow.run_local_server(port=0)
         
         token_file.write_text(creds.to_json())
     
