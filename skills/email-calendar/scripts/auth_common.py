@@ -94,11 +94,21 @@ def get_credentials(profile: str = 'default', scopes: list = None) -> Credential
             flow = InstalledAppFlow.from_client_secrets_file(str(creds_file), scopes)
             
             if is_headless():
-                # Console auth for headless servers
+                # Manual OOB-style auth for headless servers
+                flow.redirect_uri = 'urn:ietf:wg:oauth:2.0:oob'
+                auth_url, _ = flow.authorization_url(prompt='consent')
+                
                 print("\n" + "="*60)
-                print("HEADLESS AUTH: Visit the URL below, authorize, then paste the code.")
-                print("="*60 + "\n")
-                creds = flow.run_console()
+                print("HEADLESS AUTH")
+                print("="*60)
+                print(f"\n1. Open this URL in any browser:\n")
+                print(f"   {auth_url}\n")
+                print("2. Sign in and authorize access")
+                print("3. Copy the authorization code and paste it below\n")
+                
+                code = input("Enter authorization code: ").strip()
+                flow.fetch_token(code=code)
+                creds = flow.credentials
             else:
                 creds = flow.run_local_server(port=0)
         
